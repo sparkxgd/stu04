@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+	.login{
+		border: 1px solid red;
+		width: 300px;
+		height: 200px;
+		margin-left: 300px;
+		margin-top: 100px;
+	}
+	.ch{
+		height: 50px;
+	}
+	.c{
+		text-align: center;
+	}
+	
+</style>
+</head>
+<body>
+
+<form id="myform" action="##">
+<div class="login">
+	<div class="ch c">学生管理系统登录</div>
+	<div class="ch">用户名：<input type="text" name="username"></div>
+	<div class="ch">密&nbsp;&nbsp;&nbsp;码：<input type="password" name="password"></div>
+	<div class="ch c"><input type="button" onclick="login()" value="登录"></div>
+</div>
+</form>
+
+</body>
+
+<script type="text/javascript">
+
+function login(){
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"login",
+		data:$("#myform").serialize(),
+		success:function(r){
+			var rs=r.result;//返回的结果
+			if(rs==0){
+				//进入主页面（打开主页面）
+				window.location.href="openmain";  
+			}else if(rs==1){
+				//密码错误
+				alert("密码错误，请重新输入！！！！");
+			}else{
+				alert("用户名不存在，请重新输入！！！！");
+			}
+			
+		},
+		error:function(){
+			
+		}
+	});
+}
+
+</script>
+
+</html>
