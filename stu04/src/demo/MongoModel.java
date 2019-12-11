@@ -34,4 +34,25 @@ public class MongoModel {
 	    } 
 		return docs;
 	}
+	/**
+	 * 保存数据
+	 * @param doc
+	 * @return
+	 */
+	public boolean save(Document doc) {
+		this.collection.insertOne(doc);
+		return true;
+	}
+	
+	/**
+	 * 删除数据
+	 * @param doc
+	 * @return
+	 */
+	public boolean delOne(Document doc) {
+		this.collection.deleteOne(doc);
+		return true;
+	}
+	
+	
 }

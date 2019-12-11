@@ -3,11 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <title>主页面</title>
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+$.ajax({
+	url:'getstudents',
+	type:'post',
+	dataType:'json',
+	data:{},
+	success:function(r){
+		var stus=r.list;
+		var arr=[];
+	
+		for(var i=0;i<stus.length;i++){
+			arr.push('<tr>');
+			arr.push('<td>');
+			arr.push(stus[i].no);
+			arr.push('</td>');
+			
+			arr.push('<td>');
+			arr.push(stus[i].name);
+			arr.push('</td>');
+			
+			arr.push('<td>');
+			arr.push(stus[i].sex);
+			arr.push('</td>');
+			
+			arr.push('<td>');
+			arr.push(stus[i].age);
+			arr.push('</td>');
+			
+			arr.push('<td>');
+			
+			arr.push("<input type='button' onclick='del("+stus[i].no+")' value='删除'>");
+			arr.push('</td>');
+			
+			arr.push('</tr>');
+			
+		}
+		
+		$('tbody').append(arr.join(''));
+		
+		
+	}
+	
+});
+
+function openadd(){
+	window.location.href="openaddstu";
+}
+//点击删除
+function del(no){
+
+	$.ajax({
+		url:'delstu',
+		type:'post',
+		dataType:'json',
+		data:{'no':no},
+		success:function(r){
+			alert("删除成功！！");
+			window.location.reload();
+		}
+	});
+	
+}
+
+
+</script>
+
+
+<style type="text/css">
+	table tr td{
+		border: 1px solid;
+	}
+</style>
+
+
 </head>
 <body>
 欢迎进入主页面<br>
 ======================<br>
 这里就可以显示mongodb数据库里面的数据，然后进行数据增删查改<br>
 =======================<br>
+<input type="button" onclick="openadd()" value="添加">
+<a href="openaddstu">添加</a>
+
+<hr>
+<table>
+	<thead>
+		<tr>
+			<td>学号</td>
+			<td>姓名</td>
+			<td>性别</td>
+			<td>年龄</td>
+			<td>操作</td>
+		</tr>
+	</thead>
+	
+	<tbody>
+		
+	</tbody>
+
+</table>
+
 </body>
 </html>

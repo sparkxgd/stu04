@@ -23,7 +23,7 @@ public class HelloController extends Controller {
     	String password=getPara("password");
     	
     	//到mongodb数据库用户名和密码
-    	MongoModel m=new MongoModel("student", "user");
+    	MongoModel m=new MongoModel("student", "userinfo");
     	
     	Document query=new Document();
     	query.append("username", username);
@@ -31,7 +31,7 @@ public class HelloController extends Controller {
     	List<Document> docs=m.find(query);
     	
     	if(docs.size()>0) {//说明用户名存在
-    		String pw=docs.get(0).getString("password");
+    		String pw=docs.get(0).getString("passsword");
     		if(password.equals(pw)) {
     			setAttr("result", 0);//密码正确
     			renderJson();
@@ -50,4 +50,60 @@ public class HelloController extends Controller {
     public void openmain() {
     	render("main.html");
     }
+    /**
+     * 获取学生信息列表
+     */
+    public void getstudents() {
+    	MongoModel stu=new MongoModel("student", "studentinfo");
+    	Document query=new Document();
+    	List<Document> list=stu.find(query);//到mongodb数据拿数据
+    	
+    	setAttr("list", list);
+    	renderJson();   
+    	
+    }
+    /**
+     * 打开添加
+     */
+    public void openaddstu() {
+    	render("addstu.html");
+    }
+    /**
+     * 保存学生信息
+     */
+    public void savestu() {
+    	String no=getPara("no");
+    	String name=getPara("name");
+    	String sex=getPara("sex");
+    	String age=getPara("age");
+    	
+    	MongoModel m=new MongoModel("student", "studentinfo");
+    	
+    	Document doc=new Document();
+    	doc.append("no", no);
+    	doc.append("name", name);
+    	doc.append("sex", sex);
+    	doc.append("age", age);
+    	
+    	m.save(doc);
+    	redirect("openmain");
+    }
+    /**
+     * 删除学生信息
+     */
+    public void delstu() {
+    	String no=getPara("no");
+    	
+    	MongoModel m=new MongoModel("student", "studentinfo");
+    	Document doc=new Document();
+    	doc.append("no", no);
+    	
+    	m.delOne(doc);
+    	
+    	renderJson();
+    	
+    }
+    
+    
+    
 }
