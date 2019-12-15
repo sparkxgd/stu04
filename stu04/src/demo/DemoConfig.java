@@ -12,13 +12,16 @@ public class DemoConfig extends JFinalConfig {
     }
     public void configRoute(Routes me) {
     	me.setBaseViewPath("/WEB-INF");
-        me.add("/hello", HelloController.class,"/page");
+       me.add("/hello", HelloController.class,"/page");
     }
     public void configEngine(Engine me) {}
     public void configPlugin(Plugins me) {
-    	MongodbPlugin mp=new MongodbPlugin("120.79.42.237",27017);
+    	MongodbPlugin mp=new MongodbPlugin("120.79.42.237",27017,"student");
     	me.add(mp);
     }
-    public void configInterceptor(Interceptors me) {}
     public void configHandler(Handlers me) {}
+	@Override
+	public void configInterceptor(Interceptors arg0) {
+		
+	}
 }
