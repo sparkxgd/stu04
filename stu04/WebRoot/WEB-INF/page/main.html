@@ -38,7 +38,12 @@ function query(){
 				arr.push(list[i].name);
 				arr.push("</td>");
 				arr.push("<td>");
-				arr.push(list[i].sex);
+				if(list[i].sex==1){
+					arr.push("男");
+				}else{
+					arr.push("女");
+				}
+				
 				arr.push("</td>");
 				arr.push("<td>");
 				arr.push(list[i].age);
@@ -68,7 +73,6 @@ function del(no){
 		dataType:"json",
 		data:{'no':no},
 		success:function(r){
-			alert("删除成功！！！");
 			window.location.reload();
 		}
 	});
